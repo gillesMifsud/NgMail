@@ -59,4 +59,12 @@ export class HomeComponent implements OnInit {
                 (error) => console.log(error)
             );
     }
+
+    getThreadDetail(id: number) {
+        return this.mailService.getThreadDetail(id)
+            .subscribe(
+                (response) => console.log(response),
+                (error) => console.log(error)
+            );
+    }
 }

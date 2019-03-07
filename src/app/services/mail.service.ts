@@ -34,25 +34,26 @@ export class MailService {
     //         })
     //     })
     //         .pipe(
-    //             map(res => res.messages)
+    //             map((response: any) => response.messages),
+    //             catchError((response: any) => throwError(response))
     //         );
     // }
 
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/messages/id
      */
-    getMailDetail(messageId: number) {
-        return this.httpClient.get(this.API_URL + '/me/messages/' + messageId, {
-            headers: new HttpHeaders({
-                Authorization: `Bearer ${this.getAuthtoken()}`
-            })
-        })
-            .pipe(
-                map(res => {
-                    return res;
-                })
-            );
-    }
+    // getMailDetail(id: number) {
+    //     return this.httpClient.get(this.API_URL + '/me/messages/' + id, {
+    //         headers: new HttpHeaders({
+    //             Authorization: `Bearer ${this.getAuthtoken()}`
+    //         })
+    //     })
+    //         .pipe(
+    //             map(res => {
+    //                 return res;
+    //             })
+    //         );
+    // }
 
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/threads
@@ -64,8 +65,25 @@ export class MailService {
             })
         })
             .pipe(
-                map((response: Response) => response.json()),
-                catchError((response: Response) => throwError(response))
+                map((response: any) => response.threads),
+                catchError((response: any) => throwError(response))
+            );
+    }
+
+    /**
+     * GET https://www.googleapis.com/gmail/v1/users/userId/threads/id
+     */
+    getThreadDetail(id: number) {
+        const params = new URLSearchParams();
+        params.set('format', 'minimal');
+        return this.httpClient.get(this.API_URL + '/me/threads/' + id + '?' + params, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        })
+            .pipe(
+                map((response: any) => response),
+                catchError((response: any) => throwError(response))
             );
     }
 }

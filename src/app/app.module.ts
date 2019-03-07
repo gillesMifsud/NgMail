@@ -16,6 +16,7 @@ import {
 } from 'ng-gapi';
 import {UserService} from './services/user.service';
 import {MailService} from './services/mail.service';
+import { HeaderComponent } from './header/header.component';
 
 const gapiClientConfig: NgGapiClientConfig = {
     client_id: '831651867501-5eogaegfso45ii6qqfua81d1l3u4sb2d.apps.googleusercontent.com',
@@ -32,7 +33,8 @@ const gapiClientConfig: NgGapiClientConfig = {
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent
+        HomeComponent,
+        HeaderComponent
     ],
     imports: [
         BrowserModule,
