@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-12">
+        <button
+                *ngIf='!isLoggedIn()'
+                (click)="signIn()"
+                class="btn btn-primary"
+        >Sign in
+        </button>
+
+        <button
+                *ngIf='isLoggedIn()'
+                (click)="signOut()"
+                class="btn btn-primary"
+        >Sign out
+        </button>
+    </div>
+</div>
+<div class="row" *ngIf='isLoggedIn()'>
+    <div  class="col-12">
+        <h2 class="primary text-center">Welcome !</h2>
+    </div>
+    <!--<div class="col-12 col-md-6">-->
+        <!--<button (click)="getMails()" class="btn btn-primary">Get Mails</button>-->
+        <!--<ul class="list-group">-->
+            <!--<li *ngFor="let message of messages" class="list-group-item">-->
+                <!--<button class="btn btn-default" type="button" (click)="getMailDetail(message.id)">Get detail</button>{{ message.id }}-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+    <div class="col-12">
+        <p class="text-center">
+            <button (click)="getThreadList()" class="btn btn-primary">Refresh Thread list</button>
+        </p>
+        <ul class="list-group">
+            <li *ngFor="let thread of threadList" class="list-group-item">
+                {{ thread.snippet | slice:0:55  }} ...
+            </li>
+        </ul>
+    </div>
+</div>
