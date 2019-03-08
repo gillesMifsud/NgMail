@@ -16,12 +16,16 @@ import {UserService} from './services/user.service';
 import {MailService} from './services/mail.service';
 import { HeaderComponent } from './header/header.component';
 import { gapiClientConfig } from '../environments/gapiClientConfig';
+import { DetailComponent } from './mail/detail/detail.component';
+import { ListComponent } from './mail/list/list.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        HeaderComponent
+        HeaderComponent,
+        DetailComponent,
+        ListComponent
     ],
     imports: [
         BrowserModule,

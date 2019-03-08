@@ -1,0 +1,27 @@
+<div class="row" *ngIf='isLoggedIn()'>
+
+    <div class="col-12">
+        <h2 class="primary h4 text-secondary">{{ user }}</h2>
+    </div>
+
+    <div class="col-12 col-md-9">
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button (click)="signOut()" class="btn btn-secondary">Log out</button>
+            <button (click)="getThreadList()" class="btn btn-primary">Refresh Thread list</button>
+        </div>
+        <hr>
+        <ul class="list-group">
+            <li *ngFor="let thread of threadList " class="list-group-item" style="cursor: pointer;">
+                <div class="row">
+                    <div class="col-10">
+                        <span class="text-secondary align-middle">{{ thread.snippet | slice:0:45  }} ...</span>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary btn-sm" (click)="getThreadDetail(thread.id)">See</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
