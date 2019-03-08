@@ -33,7 +33,9 @@ export class UserService {
 
     public signIn() {
         this.googleAuthService.getAuth().subscribe((auth) => {
-            auth.signIn().then(res => this.signInSuccessHandler(res), err => this.signInErrorHandler(err));
+            auth.signIn().then(
+                res => this.signInSuccessHandler(res),
+                err => this.signInErrorHandler(err));
         });
     }
 
@@ -46,7 +48,7 @@ export class UserService {
                 console.error(e);
             }
             sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
-            this.router.navigate(['/home']);
+            // this.router.navigate(['/home']);
         });
     }
 

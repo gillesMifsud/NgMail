@@ -1,23 +1,12 @@
-<div class="row">
+<div class="row" *ngIf="!isLoggedIn()">
     <div class="col-12">
-        <button
-                *ngIf='!isLoggedIn()'
-                (click)="signIn()"
-                class="btn btn-primary"
-        >Sign in
-        </button>
-
-        <button
-                *ngIf='isLoggedIn()'
-                (click)="signOut()"
-                class="btn btn-primary"
-        >Sign out
-        </button>
+        <img src="./assets/gmail_icon.svg" class="img-fluid" alt="Gmail logo image">
+        <button (click)="signIn()" class="btn btn-secondary btn-block">Log in</button>
     </div>
 </div>
 <div class="row" *ngIf='isLoggedIn()'>
     <div  class="col-12">
-        <h2 class="primary text-center">Welcome !</h2>
+        <h2 class="primary text-center">{{ user }}</h2>
     </div>
     <!--<div class="col-12 col-md-6">-->
         <!--<button (click)="getMails()" class="btn btn-primary">Get Mails</button>-->
@@ -29,9 +18,12 @@
     <!--</div>-->
 
     <div class="col-12 col-md-9">
-        <p class="text-center">
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button (click)="signOut()" class="btn btn-secondary">Log out</button>
             <button (click)="getThreadList()" class="btn btn-primary">Refresh Thread list</button>
-        </p>
+        </div>
+        <hr>
         <ul class="list-group">
             <li *ngFor="let thread of threadList " class="list-group-item" style="cursor: pointer;">
                 <div class="row">

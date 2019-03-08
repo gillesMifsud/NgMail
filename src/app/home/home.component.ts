@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
     messages;
     threadList;
+    user;
 
     constructor(private userService: UserService,
                 private mailService: MailService,
@@ -24,9 +25,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.fragment.subscribe((fragment) => {
-            console.log(fragment);
-        });
+        console.log(this.getUserProfile());
+        // this.route.fragment.subscribe((fragment) => {
+        //     console.log(fragment);
+        // });
         if (this.isLoggedIn()) {
             this.getThreadList();
         }
@@ -42,6 +44,16 @@ export class HomeComponent implements OnInit {
 
     signOut() {
         return this.userService.signOut();
+    }
+
+    getUserProfile() {
+        this.mailService.getUserProfile()
+            .subscribe(
+                (user: any) => {
+                    this.user = user.emailAddress;
+                },
+                (error) => console.log(error)
+            );
     }
 
     // getMailDetail(messageId: number) {

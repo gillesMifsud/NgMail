@@ -56,6 +56,22 @@ export class MailService {
     // }
 
     /**
+     * GET https://www.googleapis.com/gmail/v1/users/userId/profile
+     */
+    getUserProfile(userId: string = 'me') {
+        return this.httpClient.get(this.API_URL + '/' + userId + '/profile', {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        })
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            );
+    }
+
+    /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/threads
      */
     getThreadsList() {
@@ -75,7 +91,7 @@ export class MailService {
      */
     getThreadDetail(id: number) {
         const params = new URLSearchParams();
-        params.set('format', 'minimal');
+        params.set('format', 'full');
         return this.httpClient.get(this.API_URL + '/me/threads/' + id + '?' + params, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.getAuthtoken()}`

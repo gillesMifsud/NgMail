@@ -6,29 +6,16 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {
-    GoogleApiModule,
+import {GoogleApiModule,
     GoogleApiService,
     GoogleAuthService,
     NgGapiClientConfig,
     NG_GAPI_CONFIG,
-    GoogleApiConfig
-} from 'ng-gapi';
+    GoogleApiConfig} from 'ng-gapi';
 import {UserService} from './services/user.service';
 import {MailService} from './services/mail.service';
 import { HeaderComponent } from './header/header.component';
-
-const gapiClientConfig: NgGapiClientConfig = {
-    client_id: '831651867501-5eogaegfso45ii6qqfua81d1l3u4sb2d.apps.googleusercontent.com',
-    discoveryDocs: ['https://gmail.googleapis.com/$discovery/rest?version=v4'],
-    fetch_basic_profile: true,
-    ux_mode: 'popup',
-    scope: [
-        'https://mail.google.com/',
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/gmail.readonly'
-    ].join(' ')
-};
+import { gapiClientConfig } from '../environments/gapiClientConfig';
 
 @NgModule({
     declarations: [
