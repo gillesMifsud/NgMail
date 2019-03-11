@@ -18,6 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { gapiClientConfig } from '../environments/gapiClientConfig';
 import { DetailComponent } from './mail/detail/detail.component';
 import { ListComponent } from './mail/list/list.component';
+import { ListItemComponent } from './mail/list/list-item/list-item.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { ListComponent } from './mail/list/list.component';
         HomeComponent,
         HeaderComponent,
         DetailComponent,
-        ListComponent
+        ListComponent,
+        ListItemComponent
     ],
     imports: [
         BrowserModule,

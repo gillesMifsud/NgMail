@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {GoogleApiService} from 'ng-gapi';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'NgMail';
+
+  constructor(private gapiService: GoogleApiService) {
+    // First make sure gapi is loaded can be in AppInitilizer
+    this.gapiService.onLoad().subscribe();
+  }
 }

@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {GoogleApiService, GoogleAuthService} from 'ng-gapi';
 import {MailService} from '../../services/mail.service';
 import {UserService} from '../../services/user.service';
 
@@ -10,18 +8,11 @@ import {UserService} from '../../services/user.service';
     styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-    messages;
     threadList;
     user;
 
     constructor(private userService: UserService,
-                private mailService: MailService,
-                private route: ActivatedRoute,
-                private authService: GoogleAuthService,
-                private gapiService: GoogleApiService) {
-        // First make sure gapi is loaded can be in AppInitilizer
-        this.gapiService.onLoad().subscribe();
-    }
+                private mailService: MailService) {}
 
     ngOnInit() {
         this.getThreadList();
@@ -30,6 +21,10 @@ export class ListComponent implements OnInit {
 
     public isLoggedIn(): boolean {
         return this.userService.isUserSignedIn();
+    }
+
+    signOut() {
+        return this.userService.signOut();
     }
 
     getUserProfile() {
@@ -54,14 +49,6 @@ export class ListComponent implements OnInit {
         return this.mailService.getThreadsList()
             .subscribe(
                 (threadlist) => this.threadList = threadlist,
-                (error) => console.log(error)
-            );
-    }
-
-    getThreadDetail(id: number) {
-        return this.mailService.getThreadDetail(id)
-            .subscribe(
-                (response) => console.log(response),
                 (error) => console.log(error)
             );
     }

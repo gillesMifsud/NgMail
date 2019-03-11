@@ -1,0 +1,15 @@
+<li
+    class="list-group-item" style="cursor: pointer;">
+    <div class="row">
+        <div class="col-10">
+            <span class="text-secondary align-middle">{{ thread.snippet | slice:0:45  }} ...</span>
+        </div>
+        <div class="col-2">
+            <a
+                [routerLink]="['/mail/' + thread.id]"
+                routerLinkActive="active"
+                class="btn btn-primary btn-sm"
+            >See</a>
+        </div>
+    </div>
+</li>

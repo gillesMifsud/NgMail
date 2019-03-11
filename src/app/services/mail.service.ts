@@ -98,7 +98,7 @@ export class MailService {
             })
         })
             .pipe(
-                map((response: any) => response),
+                map((response: any) => response.messages[0]),
                 catchError((response: any) => throwError(response))
             );
     }

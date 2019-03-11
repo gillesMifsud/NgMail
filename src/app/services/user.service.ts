@@ -4,6 +4,7 @@ import {GoogleAuthService} from 'ng-gapi/lib/GoogleAuthService';
 import GoogleUser = gapi.auth2.GoogleUser;
 import GoogleAuth = gapi.auth2.GoogleAuth;
 import {Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -11,8 +12,8 @@ export class UserService {
     private user: GoogleUser = undefined;
 
     constructor(private googleAuthService: GoogleAuthService,
-                private ngZone: NgZone,
-                private router: Router) {
+                private router: Router,
+                private ngZone: NgZone) {
     }
 
     public setUser(user: GoogleUser): void {
@@ -26,7 +27,9 @@ export class UserService {
     public getToken(): string {
         const token: string = sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
         if (!token) {
-            throw new Error('no token set , authentication required');
+            this.signOut();
+            this.router.navigate(['/home']);
+            console.log('no token set , authentication required');
         }
         return sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
     }
@@ -48,7 +51,6 @@ export class UserService {
                 console.error(e);
             }
             sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
-            // this.router.navigate(['/home']);
         });
     }
 
