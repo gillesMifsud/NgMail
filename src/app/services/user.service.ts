@@ -4,7 +4,6 @@ import {GoogleAuthService} from 'ng-gapi/lib/GoogleAuthService';
 import GoogleUser = gapi.auth2.GoogleUser;
 import GoogleAuth = gapi.auth2.GoogleAuth;
 import {Router} from '@angular/router';
-import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -28,7 +27,6 @@ export class UserService {
         const token: string = sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
         if (!token) {
             this.signOut();
-            this.router.navigate(['/home']);
             console.log('no token set , authentication required');
         }
         return sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
@@ -44,14 +42,18 @@ export class UserService {
 
     // TODO: Rework
     public signOut(): void {
-        this.googleAuthService.getAuth().subscribe((auth) => {
-            try {
+        this.googleAuthService.getAuth().subscribe(
+            (auth) => {
                 auth.signOut();
-            } catch (e) {
-                console.error(e);
-            }
-            sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
-        });
+                this.removeToken();
+            },
+            (error) => console.log(error),
+            () => this.router.navigate(['/home'])
+        );
+    }
+
+    public removeToken() {
+        return sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
     }
 
     public isUserSignedIn(): boolean {

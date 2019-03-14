@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {MailService} from '../../services/mail.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-detail',
@@ -12,10 +13,14 @@ export class DetailComponent implements OnInit {
 
     thread;
 
+    responseHeaders;
+    body;
+
     constructor(
         private router: Router,
         private mailService: MailService,
         private route: ActivatedRoute,
+        private domSanitizer: DomSanitizer
     ) {
     }
 
@@ -28,13 +33,26 @@ export class DetailComponent implements OnInit {
                 },
                 (error) => console.log(error)
             );
+        this.domSanitizer.bypassSecurityTrustHtml(this.body);
     }
 
     getThreadDetail(id: number) {
         return this.mailService.getThreadDetail(id)
             .subscribe(
-                (response) => response,
+                (response) => {
+                    const bodyResponse = response.messages[0].payload.parts[1].body.data;
+                    this.body = this.parseMail(bodyResponse);
+                    this.responseHeaders = response.messages[0].payload.headers;
+
+                    console.log(this.responseHeaders);
+                    console.log(this.parseMail(this.body));
+                    console.log(response);
+                },
                 (error) => console.log(error)
             );
+    }
+
+    parseMail(content) {
+        return atob(content.replace(/-/g, '+').replace(/_/g, '/'));
     }
 }
