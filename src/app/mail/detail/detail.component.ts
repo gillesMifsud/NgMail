@@ -10,11 +10,12 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class DetailComponent implements OnInit {
     threadId: number;
-
     thread;
-
     responseHeaders;
     body;
+    fromHeader: any;
+    toHeader: any;
+    dateHeader: any;
 
     constructor(
         private router: Router,
@@ -42,17 +43,33 @@ export class DetailComponent implements OnInit {
                 (response) => {
                     const bodyResponse = response.messages[0].payload.parts[1].body.data;
                     this.body = this.parseMail(bodyResponse);
+                    // Headers
                     this.responseHeaders = response.messages[0].payload.headers;
 
+                    Object.values(this.responseHeaders).forEach((item: any) => {
+                        if (item.name === 'From') {
+                            this.fromHeader = item.value;
+                        }
+                        if (item.name === 'To') {
+                            this.toHeader = item.value;
+                        }
+                        if (item.name === 'Date') {
+                            this.dateHeader = item.value;
+                        }
+                    });
+
                     console.log(this.responseHeaders);
-                    console.log(this.parseMail(this.body));
-                    console.log(response);
+                    // console.log(response);
                 },
                 (error) => console.log(error)
             );
     }
 
-    parseMail(content) {
+    private parseMail(content) {
         return atob(content.replace(/-/g, '+').replace(/_/g, '/'));
+    }
+
+    back() {
+        this.router.navigate(['']);
     }
 }
