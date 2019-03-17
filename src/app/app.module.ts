@@ -19,6 +19,7 @@ import { gapiClientConfig } from '../environments/gapiClientConfig';
 import { DetailComponent } from './mail/detail/detail.component';
 import { ListComponent } from './mail/list/list.component';
 import { ListItemComponent } from './mail/list/list-item/list-item.component';
+import { SanitizeHtmlPipePipe } from './shared/sanitize-html-pipe.pipe';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { ListItemComponent } from './mail/list/list-item/list-item.component';
         HeaderComponent,
         DetailComponent,
         ListComponent,
-        ListItemComponent
+        ListItemComponent,
+        SanitizeHtmlPipePipe
     ],
     imports: [
         BrowserModule,

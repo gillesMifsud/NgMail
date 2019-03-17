@@ -10,6 +10,6 @@
 </div>
 <div class="row mail-content">
   <div class="col-12">
-    <div [innerHTML]="body"></div>
+    <div [innerHTML]="body | sanitizeHtmlPipe"></div>
   </div>
 </div>
