@@ -4,7 +4,7 @@
 
         <form [formGroup]="mailForm" (ngSubmit)="onSubmit()">
 
-            <div class="form-row">
+            <div class="form-row mb-3">
 
                 <label for="to">To</label>
 
@@ -26,35 +26,42 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row mb-3">
                 <label for="subject">Subject ({{subjectCharLeft}} characters left)</label>
                 <input type="email" class="form-control"
                        formControlName="subject"
+                       maxlength="100"
+                       [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''"
+                       (keyup)="onKey($event)"
                        required="required"
                        id="subject">
                 <p *ngIf="!mailForm.get('subject').valid && mailForm.get('subject').touched"
                    class="invalid-feedback">
-                    <span *ngIf="mailForm.get('subject').errors['maxLength']">50 characters max</span>
+                    <span *ngIf="mailForm.get('subject').errors['maxLength']">100 characters max !</span>
                     <span *ngIf="mailForm.get('subject').errors['required']">This field is required!</span>
                 </p>
             </div>
 
-            <div class="form-row">
+            <div class="form-row mb-3">
                 <label for="message">Message</label>
                 <textarea type="text" class="form-control"
+                          [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''"
                           required="required"
+                          minlength="3"
                           rows="3"
                           formControlName="message"
                           id="message">
                 </textarea>
+                <p *ngIf="!mailForm.get('message').valid && mailForm.get('message').touched"
+                   class="invalid-feedback">
+                    <span *ngIf="mailForm.get('message').errors['minLength']">Please enter at least 3 characters !</span>
+                    <span *ngIf="mailForm.get('message').errors['required']">This field is required!</span>
+                </p>
             </div>
 
             <button [disabled]="!mailForm.valid"
-                    type="submit" class="btn btn-primary">Send
-            </button>
-
+                    type="submit" class="btn btn-primary">Send</button>
             <button type="submit" class="btn btn-warning" (click)="onCancel()">Cancel</button>
-
         </form>
 
     </div>

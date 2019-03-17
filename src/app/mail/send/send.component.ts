@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NewMail} from '../../models/newMail.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MailService} from '../../services/mail.service';
 
 @Component({
     selector: 'app-send',
@@ -11,10 +11,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class SendComponent implements OnInit {
     mailForm: FormGroup;
-    subjectCharLeft: number = 50;
+    subjectCharLeft: number;
+    private subjectCharLeftDefVal = 100;
 
     constructor(
-        private userService: UserService,
+        private mailService: MailService,
         private route: ActivatedRoute,
         private router: Router
     ) {
@@ -22,6 +23,7 @@ export class SendComponent implements OnInit {
 
     ngOnInit() {
         this.initForm();
+        this.subjectCharLeft = this.subjectCharLeftDefVal;
     }
 
     private initForm() {
@@ -36,7 +38,7 @@ export class SendComponent implements OnInit {
             ]),
             'subject': new FormControl(to, [
                 Validators.required,
-                Validators.maxLength(50)
+                Validators.maxLength(100)
             ]),
             'message': new FormControl(message, [
                 Validators.required,
@@ -51,10 +53,21 @@ export class SendComponent implements OnInit {
             this.mailForm.value['subject'],
             this.mailForm.value['message']
         );
+        this.mailService.sendMessage(newMail)
+            .subscribe(
+                (response: Response) => {
+                    console.log(response);
+                }
+            );
+        // this.mailForm.reset();
         console.log(newMail);
     }
 
     onCancel() {
         this.router.navigate(['../'], {relativeTo: this.route});
+    }
+
+    onKey(event: any) {
+        this.subjectCharLeft = this.subjectCharLeftDefVal - event.target.value.length;
     }
 }

@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserService} from './user.service';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import {NewMail} from '../models/newMail.model';
 
 @Injectable({
     providedIn: 'root'
@@ -101,5 +102,16 @@ export class MailService {
                 map((response: any) => response),
                 catchError((response: any) => throwError(response))
             );
+    }
+
+    /**
+     * POST https://www.googleapis.com/gmail/v1/users/userId/messages/send
+     */
+    sendMessage(message: NewMail) {
+        return this.httpClient.post(this.API_URL + '/me/messages/send', message, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        });
     }
 }
