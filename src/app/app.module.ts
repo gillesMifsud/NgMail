@@ -20,6 +20,7 @@ import { DetailComponent } from './mail/detail/detail.component';
 import { ListComponent } from './mail/list/list.component';
 import { ListItemComponent } from './mail/list/list-item/list-item.component';
 import { SanitizeHtmlPipePipe } from './shared/sanitize-html-pipe.pipe';
+import { SendComponent } from './mail/send/send.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { SanitizeHtmlPipePipe } from './shared/sanitize-html-pipe.pipe';
         DetailComponent,
         ListComponent,
         ListItemComponent,
-        SanitizeHtmlPipePipe
+        SanitizeHtmlPipePipe,
+        SendComponent
     ],
     imports: [
         BrowserModule,
