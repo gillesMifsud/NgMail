@@ -1,9 +1,4 @@
-<app-header></app-header>
+<app-header [isLoggedIn]="isSignedIn"></app-header>
 <div class="container mt-4">
-    <div class="row justify-content-end" *ngIf="isSignedIn">
-        <div class="col-12">
-            <button class="btn btn-primary" (click)="onNewMail()">New</button>
-        </div>
-    </div>
     <router-outlet></router-outlet>
 </div>

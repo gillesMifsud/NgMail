@@ -21,6 +21,7 @@ import { ListComponent } from './mail/list/list.component';
 import { ListItemComponent } from './mail/list/list-item/list-item.component';
 import { SanitizeHtmlPipePipe } from './shared/sanitize-html-pipe.pipe';
 import { SendComponent } from './mail/send/send.component';
+import {AuthGuard} from './services/auth-guard.service';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,7 @@ import { SendComponent } from './mail/send/send.component';
             useValue: gapiClientConfig
         })
     ],
-    providers: [UserService, MailService],
+    providers: [UserService, MailService, AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {

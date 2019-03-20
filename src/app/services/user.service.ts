@@ -33,22 +33,34 @@ export class UserService {
     }
 
     public signIn() {
-        this.googleAuthService.getAuth().subscribe((auth) => {
-            auth.signIn().then(
-                res => this.signInSuccessHandler(res),
-                err => this.signInErrorHandler(err));
-        });
+        this.googleAuthService.getAuth()
+            .subscribe((auth) => {
+                auth.signIn().then(
+                    (res) => {
+                        this.ngZone.run(
+                            () => {
+                                this.router.navigate(['mail-list']);
+                                this.signInSuccessHandler(res);
+                            }
+                        );
+                    },
+                    (err) => this.signInErrorHandler(err));
+            });
     }
 
     // TODO: Rework
     public signOut(): void {
         this.googleAuthService.getAuth().subscribe(
             (auth) => {
-                auth.signOut();
-                this.removeToken();
+                this.ngZone.run(
+                    () => {
+                        this.router.navigate(['home']);
+                        auth.signOut();
+                        this.removeToken();
+                    }
+                );
             },
-            (error) => console.log(error),
-            () => this.router.navigate([''])
+            (error) => console.log(error)
         );
     }
 
