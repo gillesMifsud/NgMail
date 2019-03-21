@@ -4,11 +4,15 @@ import {GoogleAuthService} from 'ng-gapi/lib/GoogleAuthService';
 import GoogleUser = gapi.auth2.GoogleUser;
 import GoogleAuth = gapi.auth2.GoogleAuth;
 import {Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable()
 export class UserService {
+
     public static readonly SESSION_STORAGE_KEY: string = 'accessToken';
     private user: GoogleUser = undefined;
+    private logger = new Subject<boolean>();
+    private loggedIn = false;
 
     constructor(private googleAuthService: GoogleAuthService,
                 private router: Router,
@@ -57,6 +61,8 @@ export class UserService {
                         this.router.navigate(['home']);
                         auth.signOut();
                         this.removeToken();
+                        this.loggedIn = false;
+                        this.logger.next(this.loggedIn);
                     }
                 );
             },
@@ -78,10 +84,17 @@ export class UserService {
             sessionStorage.setItem(
                 UserService.SESSION_STORAGE_KEY, res.getAuthResponse().access_token
             );
+            // Subject next here
+            this.loggedIn = true;
+            this.logger.next(this.loggedIn);
         });
     }
 
     private signInErrorHandler(err) {
         console.warn(err);
+    }
+
+    isLoggedIn(): Observable<boolean> {
+        return this.logger.asObservable();
     }
 }
