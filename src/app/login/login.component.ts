@@ -4,10 +4,10 @@ import {GoogleApiService} from 'ng-gapi';
 
 @Component({
     selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private gapiService: GoogleApiService) {
@@ -16,10 +16,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {}
-
-    public isLoggedIn(): boolean {
-        return this.userService.isUserSignedIn();
-    }
 
     public signIn() {
         this.userService.signIn();

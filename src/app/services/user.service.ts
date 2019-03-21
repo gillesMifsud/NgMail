@@ -58,7 +58,7 @@ export class UserService {
             (auth) => {
                 this.ngZone.run(
                     () => {
-                        this.router.navigate(['home']);
+                        this.router.navigate(['login']);
                         auth.signOut();
                         this.removeToken();
                         this.loggedIn = false;
@@ -87,6 +87,7 @@ export class UserService {
             // Subject next here
             this.loggedIn = true;
             this.logger.next(this.loggedIn);
+            this.router.navigate(['mail-list']);
         });
     }
 
