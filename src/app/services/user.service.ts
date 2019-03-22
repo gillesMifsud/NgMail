@@ -28,11 +28,6 @@ export class UserService {
     }
 
     public getToken(): string {
-        const token: string = sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
-        if (!token) {
-            this.signOut();
-            console.log('no token set , authentication required');
-        }
         return sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
     }
 
