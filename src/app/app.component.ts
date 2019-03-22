@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    isSignedIn = false;
+    isLoggedIn = true;
 
     constructor(
         private gapiService: GoogleApiService,
@@ -20,10 +20,10 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isSignedIn = this.userService.isUserSignedIn();
-    }
-
-    onNewMail() {
-        this.router.navigate(['/new']);
+        this.userService.isLoggedIn().subscribe(loggedIn => {
+                this.isLoggedIn = loggedIn;
+                // console.log(this.isLoggedIn);
+            }
+        );
     }
 }

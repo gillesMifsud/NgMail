@@ -1,0 +1,16 @@
+.logo {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 1rem;
+  span {
+    font-size: 20px;
+  }
+}
+
+.list-group-item {
+  display: flex;
+  i {
+    margin-right: 10px;
+  }
+}

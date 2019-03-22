@@ -14,7 +14,7 @@ import {GoogleApiModule,
     GoogleApiConfig} from 'ng-gapi';
 import {UserService} from './services/user.service';
 import {MailService} from './services/mail.service';
-import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { gapiClientConfig } from '../environments/gapiClientConfig';
 import { DetailComponent } from './mail/detail/detail.component';
 import { ListComponent } from './mail/list/list.component';
@@ -28,7 +28,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     declarations: [
         AppComponent,
         LoginComponent,
-        HeaderComponent,
+        SidebarComponent,
         DetailComponent,
         ListComponent,
         ListItemComponent,

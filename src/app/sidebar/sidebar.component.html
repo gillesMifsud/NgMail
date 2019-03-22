@@ -1,0 +1,26 @@
+<nav>
+    <div class="logo">
+        <img src="./assets/logo_gmail_lockup_default_1x.png" class="d-inline-block" alt="">
+        <span class="text-secondary">NgMail</span>
+    </div>
+    <div class="list-group">
+            <a [routerLinkActive]="['active']"
+               [routerLink]="['/new']"
+               class="list-group-item list-group-item-action">
+                <i class="material-icons">add</i>
+                <span>New</span>
+            </a>
+            <a [routerLinkActive]="['active']"
+               [routerLink]="['/mail-list']"
+               class="list-group-item list-group-item-action">
+                <i class="material-icons">list</i>
+                <span>List</span>
+            </a>
+            <a (click)="logout()"
+               class="list-group-item list-group-item-action"
+               style="cursor: pointer;">
+                <i class="material-icons">power_settings_new</i>
+                <span>Logout</span>
+            </a>
+    </div>
+</nav>
