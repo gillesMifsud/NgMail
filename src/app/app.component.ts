@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GoogleApiService} from 'ng-gapi';
 import {UserService} from './services/user.service';
-import {Router} from '@angular/router';
+import {MatDrawerToggleResult} from '@angular/material';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
 
     constructor(
         private gapiService: GoogleApiService,
-        private router: Router,
         private userService: UserService) {
         // First make sure gapi is loaded can be in AppInitilizer
         this.gapiService.onLoad().subscribe();

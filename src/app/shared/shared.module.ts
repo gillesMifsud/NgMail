@@ -8,7 +8,7 @@ import {
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatProgressSpinnerModule, MatSidenavModule
+    MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule
 } from '@angular/material';
 import {ClickOutsideDirective} from '../directives/click-outside.directive';
 
@@ -18,6 +18,7 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
     ],
     imports: [
         MatMenuModule,
+        MatToolbarModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,
@@ -32,6 +33,7 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
         CommonModule,
         ClickOutsideDirective,
         MatMenuModule,
+        MatToolbarModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,

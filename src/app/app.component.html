@@ -1,4 +1,17 @@
-<div class="container">
-    <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
-    <router-outlet class="main"></router-outlet>
-</div>
+<mat-drawer-container autosize>
+
+    <mat-drawer #drawer mode="side" [opened]="true" class="mat-elevation-z4">
+        <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
+    </mat-drawer>
+
+    <mat-toolbar color="primary" class="mat-elevation-z5">
+        <button type="button" mat-button (click)="drawer.toggle()">
+            <i class="material-icons">menu</i>
+        </button>
+    </mat-toolbar>
+
+    <div class="container">
+        <router-outlet class="main"></router-outlet>
+    </div>
+
+</mat-drawer-container>

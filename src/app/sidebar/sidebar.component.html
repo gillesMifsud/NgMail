@@ -1,13 +1,5 @@
-<div class="sidebar"
-     appClickOutside (clickOutside)="menuOpened = false">
-
-    <button class="btn btn-secondary" (click)="openMenu($event)" id="sidebar-trigger">
-        <i class="material-icons">menu</i>
-    </button>
-
-    <nav [ngClass]="{
-     'd-block': menuOpened,
-     'd-none' : !menuOpened}">
+<div class="sidebar">
+    <nav>
         <div class="logo">
             <img src="./assets/logo_gmail_lockup_default_1x.png" class="d-inline-block" alt="">
             <span class="text-secondary">NgMail</span>
