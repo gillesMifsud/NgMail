@@ -3,7 +3,7 @@ import {UserService} from '../services/user.service';
 import {GoogleApiService} from 'ng-gapi';
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })

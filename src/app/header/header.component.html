@@ -2,32 +2,30 @@
 
     <a class="navbar-brand" href="#">
         <img src="./assets/logo_gmail_lockup_default_1x.png" class="d-inline-block" alt="">
-        NgMail
+        NgMail <i class="material-icons">visibility</i>
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <button (click)="toggleCollapse()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+
+    <div class="collapse navbar-collapse"
+         [class.show]="show"
+         [@collapse]="collapse"
+         id="navbarNav">
         <ul class="navbar-nav">
             <ng-template [ngIf]="isLoggedIn">
                 <li class="nav-item" [routerLinkActive]="['active']" >
-                    <a class="nav-link" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item" [routerLinkActive]="['active']" >
                     <a class="nav-link" [routerLink]="['/new']">New <span class="sr-only">(current)</span></a>
                 </li>
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Features</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Pricing</a>-->
-                <!--</li>-->
                 <li class="nav-item" >
                     <a class="nav-link" (click)="logout()">Logout</a>
                 </li>
             </ng-template>
+            <li *ngIf="!isLoggedIn" class="nav-item" [routerLinkActive]="['active']" >
+                <a class="nav-link" [routerLink]="['/login']">Login <span class="sr-only">(current)</span></a>
+            </li>
         </ul>
     </div>
 </nav>

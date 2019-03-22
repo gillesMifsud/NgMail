@@ -7,7 +7,7 @@ import {ListComponent} from './mail/list/list.component';
 import {AuthGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/home', pathMatch: 'full'}, // Redirect only if the full path is empty
+    {path: '', redirectTo: '/mail-list', pathMatch: 'full'}, // Redirect only if the full path is empty
     {path: 'login', component: LoginComponent},
     {path: 'mail-list', component: ListComponent, canActivate: [AuthGuard]},
     {path: 'mail/:threadId', component: DetailComponent, canActivate: [AuthGuard]},

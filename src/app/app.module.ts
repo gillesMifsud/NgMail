@@ -22,6 +22,7 @@ import { ListItemComponent } from './mail/list/list-item/list-item.component';
 import { SanitizeHtmlPipePipe } from './shared/sanitize-html-pipe.pipe';
 import { SendComponent } from './mail/send/send.component';
 import {AuthGuard} from './services/auth-guard.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import {AuthGuard} from './services/auth-guard.service';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
