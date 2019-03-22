@@ -8,6 +8,7 @@ import {UserService} from '../services/user.service';
 })
 export class SidebarComponent implements OnInit {
     isLoggedIn = false;
+    menuOpened = true;
 
     constructor(private userService: UserService) {
     }
@@ -22,5 +23,10 @@ export class SidebarComponent implements OnInit {
 
     logout() {
         this.userService.signOut();
+    }
+
+    openMenu($event) {
+        $event.preventDefault();
+        this.menuOpened = true;
     }
 }

@@ -27,6 +27,7 @@ import {AuthGuard} from './services/auth-guard.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './services/token.interceptor.service';
 import {RedirectInterceptorService} from './services/redirect.interceptor.service';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import {RedirectInterceptorService} from './services/redirect.interceptor.servic
         GoogleApiModule.forRoot({
             provide: NG_GAPI_CONFIG,
             useValue: gapiClientConfig
-        })
+        }),
+        SharedModule
     ],
     providers: [UserService, MailService, AuthGuard,
         {
