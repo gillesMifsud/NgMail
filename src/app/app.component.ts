@@ -18,10 +18,12 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.isLoggedIn().subscribe(loggedIn => {
+        this.userService.isLoggedIn().subscribe(
+            loggedIn => {
                 this.isLoggedIn = loggedIn;
-                // console.log(this.isLoggedIn);
-            }
+                console.log(this.isLoggedIn);
+            },
+            error1 => console.log(error1)
         );
     }
 }

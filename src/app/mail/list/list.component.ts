@@ -10,6 +10,7 @@ import {UserService} from '../../services/user.service';
 export class ListComponent implements OnInit {
     threadList;
     user;
+    isLoading = true;
 
     constructor(private userService: UserService,
                 private mailService: MailService) {}
@@ -40,7 +41,10 @@ export class ListComponent implements OnInit {
     getThreadList() {
         return this.mailService.getThreadsList()
             .subscribe(
-                (threadlist) => this.threadList = threadlist,
+                (threadlist) => {
+                    this.threadList = threadlist;
+                    this.isLoading = false;
+                },
                 (error) => console.log(error)
             );
     }

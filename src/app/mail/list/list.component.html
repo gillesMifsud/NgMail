@@ -1,6 +1,9 @@
 <div class="row mt-4">
     <div class="col-12">
-        <mat-card>
+        <mat-card *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </mat-card>
+        <mat-card *ngIf="!isLoading">
             <mat-card-header>
                 <mat-card-title>{{ user }}</mat-card-title>
                 <mat-card-subtitle>

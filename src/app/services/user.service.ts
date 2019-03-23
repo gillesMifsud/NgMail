@@ -69,7 +69,7 @@ export class UserService {
         return sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
     }
 
-    public isUserSignedIn(): boolean {
+    public isTokenPresent(): boolean {
         return !_.isEmpty(sessionStorage.getItem(UserService.SESSION_STORAGE_KEY));
     }
 
