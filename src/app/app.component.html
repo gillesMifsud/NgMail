@@ -1,10 +1,10 @@
-<mat-drawer-container autosize>
+<mat-drawer-container autosize *ngIf="isLoggedIn">
 
-    <mat-drawer #drawer mode="side" [opened]="true" class="mat-elevation-z4" *ngIf="isLoggedIn">
+    <mat-drawer #drawer mode="side" [opened]="true" class="mat-elevation-z4">
         <app-sidebar></app-sidebar>
     </mat-drawer>
 
-    <mat-toolbar color="primary" class="mat-elevation-z5" *ngIf="isLoggedIn">
+    <mat-toolbar color="primary" class="mat-elevation-z5">
         <button type="button" mat-button (click)="drawer.toggle()">
             <i class="material-icons">menu</i>
         </button>
@@ -15,3 +15,7 @@
     </div>
 
 </mat-drawer-container>
+
+<div class="container" *ngIf="!isLoggedIn">
+    <app-login></app-login>
+</div>

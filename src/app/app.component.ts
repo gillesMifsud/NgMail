@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GoogleApiService} from 'ng-gapi';
 import {UserService} from './services/user.service';
-import {MatDrawerToggleResult} from '@angular/material';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +8,7 @@ import {MatDrawerToggleResult} from '@angular/material';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    isLoggedIn = true;
+    isLoggedIn: boolean;
 
     constructor(
         private gapiService: GoogleApiService,

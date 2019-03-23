@@ -11,7 +11,8 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'mail-list', component: ListComponent, canActivate: [AuthGuard]},
     {path: 'mail/:threadId', component: DetailComponent, canActivate: [AuthGuard]},
-    {path: 'new', component: SendComponent, canActivate: [AuthGuard]}
+    {path: 'new', component: SendComponent, canActivate: [AuthGuard]},
+    { path: '**', redirectTo: '/mail-list' }
 ];
 
 @NgModule({

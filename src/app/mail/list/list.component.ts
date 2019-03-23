@@ -19,14 +19,6 @@ export class ListComponent implements OnInit {
         this.getUserProfile();
     }
 
-    public isLoggedIn(): boolean {
-        return this.userService.isUserSignedIn();
-    }
-
-    signOut() {
-        return this.userService.signOut();
-    }
-
     getUserProfile() {
         this.mailService.getUserProfile()
             .subscribe(

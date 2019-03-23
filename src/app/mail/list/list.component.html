@@ -1,22 +1,22 @@
-<div class="row" *ngIf='isLoggedIn()'>
-
+<div class="row mt-4">
     <div class="col-12">
-        <h2 class="primary h4 text-secondary">{{ user }}</h2>
-    </div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{ user }}</mat-card-title>
+                <mat-card-subtitle>
+                    <button mat-raised-button color="primary" (click)="getThreadList()">Refresh Thread list</button>
+                </mat-card-subtitle>
+            </mat-card-header>
 
-    <div class="col-12 col-md-9">
-
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button (click)="signOut()" class="btn btn-secondary">Log out</button>
-            <button (click)="getThreadList()" class="btn btn-primary">Refresh Thread list</button>
-        </div>
-        <hr>
-        <ul class="list-group">
-            <app-list-item
-                    *ngFor="let threadElem of threadList; let i = index;"
-                    [thread]="threadElem"
-                    [index]="i"
-            ></app-list-item>
-        </ul>
+            <mat-card-content>
+                <mat-list>
+                    <app-list-item
+                            *ngFor="let threadElem of threadList; let i = index;"
+                            [thread]="threadElem"
+                            [index]="i">
+                    </app-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

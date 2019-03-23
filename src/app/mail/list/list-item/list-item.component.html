@@ -1,15 +1,10 @@
-<li
-    class="list-group-item" style="cursor: pointer;">
-    <div class="row">
-        <div class="col-10">
-            <span class="text-secondary align-middle">{{ thread.snippet | slice:0:45  }} ...</span>
-        </div>
-        <div class="col-2">
-            <a
-                [routerLink]="['/mail/' + thread.id]"
-                routerLinkActive="active"
-                class="btn btn-primary btn-sm"
-            >See</a>
-        </div>
-    </div>
-</li>
+<mat-list-item>
+    <mat-icon mat-list-icon>mail</mat-icon>
+    <h4 mat-line>{{ thread.snippet | slice:0:60  }} ...</h4>
+    <a mat-mini-fab
+       [routerLink]="['/mail/' + thread.id]"
+       routerLinkActive="active">
+        <i class="material-icons">chevron_right</i>
+    </a>
+</mat-list-item>
+<mat-divider></mat-divider>
