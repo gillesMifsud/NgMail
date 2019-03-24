@@ -8,15 +8,12 @@ import {
 import {UserService} from './user.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
-import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RedirectInterceptorService implements HttpInterceptor {
-    constructor(
-        public router: Router,
-        private userService: UserService) {
+    constructor(private userService: UserService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,8 +24,7 @@ export class RedirectInterceptorService implements HttpInterceptor {
         }, (err: any) => {
             if (err instanceof HttpErrorResponse) {
                 if (err.status === 401) {
-                    this.router.navigate(['login']);
-                    this.userService.removeToken();
+                    this.userService.signOut();
                 }
             }
         });

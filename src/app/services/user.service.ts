@@ -4,15 +4,15 @@ import {GoogleAuthService} from 'ng-gapi/lib/GoogleAuthService';
 import GoogleUser = gapi.auth2.GoogleUser;
 import GoogleAuth = gapi.auth2.GoogleAuth;
 import {Router} from '@angular/router';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import 'rxjs/add/operator/share';
 
 @Injectable()
 export class UserService {
 
     public static readonly SESSION_STORAGE_KEY: string = 'accessToken';
     private user: GoogleUser = undefined;
-    private logger = new Subject<boolean>();
-    private loggedIn = false;
+    isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
 
     constructor(private googleAuthService: GoogleAuthService,
                 private router: Router,
@@ -47,17 +47,15 @@ export class UserService {
             });
     }
 
-    // TODO: Rework
     public signOut(): void {
         this.googleAuthService.getAuth().subscribe(
             (auth) => {
                 this.ngZone.run(
                     () => {
-                        this.router.navigate(['login']);
                         auth.signOut();
                         this.removeToken();
-                        this.loggedIn = false;
-                        this.logger.next(this.loggedIn);
+                        this.isLoginSubject.next(false);
+                        this.router.navigate(['login']);
                     }
                 );
             },
@@ -69,8 +67,8 @@ export class UserService {
         return sessionStorage.removeItem(UserService.SESSION_STORAGE_KEY);
     }
 
-    public isTokenPresent(): boolean {
-        return !_.isEmpty(sessionStorage.getItem(UserService.SESSION_STORAGE_KEY));
+    public hasToken(): boolean {
+        return !!sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
     }
 
     private signInSuccessHandler(res: GoogleUser) {
@@ -80,8 +78,7 @@ export class UserService {
                 UserService.SESSION_STORAGE_KEY, res.getAuthResponse().access_token
             );
             // Subject next here
-            this.loggedIn = true;
-            this.logger.next(this.loggedIn);
+            this.isLoginSubject.next(true);
             this.router.navigate(['mail-list']);
         });
     }
@@ -91,6 +88,6 @@ export class UserService {
     }
 
     isLoggedIn(): Observable<boolean> {
-        return this.logger.asObservable();
+        return this.isLoginSubject.asObservable().share();
     }
 }
