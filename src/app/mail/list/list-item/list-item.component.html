@@ -1,8 +1,7 @@
 <mat-list-item>
     <mat-icon mat-list-icon>mail</mat-icon>
-    <h4 mat-line>{{ thread.snippet | slice:0:60  }} ...</h4>
-    <a mat-mini-fab
-       [routerLink]="['/mail/' + thread.id]"
+    <h4 mat-line>{{ thread.snippet }} ...</h4>
+    <a [routerLink]="['/mail/' + thread.id]"
        routerLinkActive="active">
         <i class="material-icons">chevron_right</i>
     </a>

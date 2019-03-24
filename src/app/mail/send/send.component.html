@@ -4,65 +4,71 @@
 
         <form [formGroup]="mailForm" (ngSubmit)="onSubmit()">
 
-            <div class="form-row mb-3">
+            <div class="row">
 
-                <label for="to">To</label>
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
-                    </div>
-                    <input type="email" class="form-control"
-                           formControlName="to"
-                           [email]="true"
-                           [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''"
-                           id="to" placeholder="name@example.com">
-
-                    <p *ngIf="!mailForm.get('to').valid && mailForm.get('to').touched"
-                       class="invalid-feedback">
-                        <span *ngIf="mailForm.get('to').errors['email']">This email is invalid!</span>
-                        <span *ngIf="mailForm.get('to').errors['required']">This field is required!</span>
-                    </p>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email address</mat-label>
+                        <input matInput placeholder="name@example.com"
+                               type="email"
+                               formControlName="to"
+                               [email]="true"
+                               [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''">
+                        <mat-icon matSuffix>mail</mat-icon>
+                        <mat-hint *ngIf="!mailForm.get('to').valid && mailForm.get('to').touched">
+                            <span *ngIf="mailForm.get('to').errors['email']">This email is invalid!</span>
+                            <span *ngIf="mailForm.get('to').errors['required']">This field is required!</span>
+                        </mat-hint>
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-row mb-3">
-                <label for="subject">Subject ({{subjectCharLeft}} characters left)</label>
-                <input type="email" class="form-control"
-                       formControlName="subject"
-                       maxlength="100"
-                       [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''"
-                       (keyup)="onKey($event)"
-                       required="required"
-                       id="subject">
-                <p *ngIf="!mailForm.get('subject').valid && mailForm.get('subject').touched"
-                   class="invalid-feedback">
-                    <span *ngIf="mailForm.get('subject').errors['maxLength']">100 characters max !</span>
-                    <span *ngIf="mailForm.get('subject').errors['required']">This field is required!</span>
-                </p>
-            </div>
+                <div class="col-sm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Subject ({{subjectCharLeft}} characters left)</mat-label>
+                        <input matInput placeholder="{{subjectCharLeft}} characters left"
+                               type="text"
+                               formControlName="subject"
+                               maxlength="100"
+                               [ngClass]="!mailForm.get('subject').valid && mailForm.get('subject').touched ? 'is-invalid' : ''"
+                               (keyup)="onKey($event)"
+                               required="required">
+                        <!--<mat-icon matSuffix>mail</mat-icon>-->
+                        <mat-hint *ngIf="!mailForm.get('subject').valid && mailForm.get('subject').touched"
+                                  class="invalid-feedback">
+                            <span *ngIf="mailForm.get('subject').errors['maxLength']">100 characters max !</span>
+                            <span *ngIf="mailForm.get('subject').errors['required']">This field is required!</span>
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
 
-            <div class="form-row mb-3">
-                <label for="message">Message</label>
-                <textarea type="text" class="form-control"
-                          [ngClass]="!mailForm.get('to').valid && mailForm.get('to').touched ? 'is-invalid' : ''"
-                          required="required"
-                          minlength="3"
-                          rows="3"
-                          formControlName="message"
-                          id="message">
+                <div class="col-sm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Message</mat-label>
+                        <textarea matInput placeholder=""
+                                  type="text"
+                                  [ngClass]="!mailForm.get('message').valid && mailForm.get('message').touched ? 'is-invalid' : ''"
+                                  required="required"
+                                  minlength="3"
+                                  rows="3"
+                                  formControlName="message">
                 </textarea>
-                <p *ngIf="!mailForm.get('message').valid && mailForm.get('message').touched"
-                   class="invalid-feedback">
-                    <span *ngIf="mailForm.get('message').errors['minLength']">Please enter at least 3 characters !</span>
-                    <span *ngIf="mailForm.get('message').errors['required']">This field is required!</span>
-                </p>
+                        <!--<mat-icon matSuffix>mail</mat-icon>-->
+                        <mat-hint *ngIf="!mailForm.get('message').valid && mailForm.get('message').touched"
+                                  class="invalid-feedback">
+                            <span *ngIf="mailForm.get('message').errors['minLength']">Please enter at least 3 characters !</span>
+                            <span *ngIf="mailForm.get('message').errors['required']">This field is required!</span>
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm">
+                    <button [disabled]="!mailForm.valid"
+                            type="submit" class="btn btn-primary">Send
+                    </button>
+                    <button type="submit" class="btn btn-warning" (click)="onCancel()">Cancel</button>
+                </div>
+
             </div>
-
-            <button [disabled]="!mailForm.valid"
-                    type="submit" class="btn btn-primary">Send</button>
-            <button type="submit" class="btn btn-warning" (click)="onCancel()">Cancel</button>
         </form>
-
     </div>
 </div>

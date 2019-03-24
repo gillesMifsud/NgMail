@@ -1,15 +1,19 @@
-<div class="row mail-header">
-  <div class="col-12 col-sm-10 col-md-10">
-    <p>From : <b class="text-white">{{ fromHeader }}</b></p>
-    <p>To : <b class="text-white">{{ toHeader }}</b></p>
-    <p>Date: <b class="text-white">{{ dateHeader }}</b></p>
-  </div>
-  <div class="col-12 col-sm-2 col-md-2">
-    <button class="btn btn-secondary" (click)="back()">Retour liste</button>
-  </div>
-</div>
-<div class="row mail-content">
-  <div class="col-12">
-    <div [innerHTML]="body | sanitizeHtmlPipe"></div>
-  </div>
-</div>
+<mat-card>
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-10 col-md-10">
+            <p>From : <b>{{ fromHeader }}</b></p>
+            <p>To : <b>{{ toHeader }}</b></p>
+            <p>Date: <b>{{ dateHeader }}</b></p>
+        </div>
+        <div class="col-12 col-sm-2 col-md-2">
+            <button mat-raised-button color="primary" (click)="back()">
+                <i class="material-icons">chevron_left</i> Retour
+            </button>
+        </div>
+    </div>
+
+    <mat-card-content>
+        <div [innerHTML]="body | sanitizeHtmlPipe"></div>
+    </mat-card-content>
+
+</mat-card>
