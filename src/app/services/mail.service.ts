@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {GoogleApiService} from 'ng-gapi';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserService} from './user.service';
-import {catchError, map} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {catchError, concatAll, flatMap, map, mergeAll, mergeMap} from 'rxjs/operators';
+import {throwError, Observable, concat, forkJoin, merge, from, of} from 'rxjs';
 import {NewMail} from '../models/newMail.model';
 
 @Injectable({
@@ -11,6 +11,7 @@ import {NewMail} from '../models/newMail.model';
 })
 export class MailService {
     private readonly API_URL: string = 'https://www.googleapis.com/gmail/v1/users';
+    private readonly BATCH_API_URL: string = 'https://www.googleapis.com/batch/gmail/v1/users';
 
     constructor(
         private gapiService: GoogleApiService,
@@ -28,33 +29,33 @@ export class MailService {
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/messages
      */
-    // getListMails() {
-    //     return this.httpClient.get(this.API_URL + '/me/messages', {
-    //         headers: new HttpHeaders({
-    //             Authorization: `Bearer ${this.getAuthtoken()}`
-    //         })
-    //     })
-    //         .pipe(
-    //             map((response: any) => response.messages),
-    //             catchError((response: any) => throwError(response))
-    //         );
-    // }
+    getUsersMessagesList() {
+        return this.httpClient.get(this.API_URL + '/me/messages', {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        })
+            .pipe(
+                map((response: any) => response.messages),
+                catchError((response: any) => throwError(response))
+            );
+    }
 
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/messages/id
      */
-    // getMailDetail(id: number) {
-    //     return this.httpClient.get(this.API_URL + '/me/messages/' + id, {
-    //         headers: new HttpHeaders({
-    //             Authorization: `Bearer ${this.getAuthtoken()}`
-    //         })
-    //     })
-    //         .pipe(
-    //             map(res => {
-    //                 return res;
-    //             })
-    //         );
-    // }
+    getUsersMessagesDetail(id: number) {
+        return this.httpClient.get(this.API_URL + '/me/messages/' + id, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        })
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            );
+    }
 
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/profile
@@ -75,8 +76,11 @@ export class MailService {
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/threads
      */
-    getThreadsList() {
-        return this.httpClient.get(this.API_URL + '/me/threads', {
+    getThreadsList(maxResults: number = 10, labelId: string = 'INBOX') {
+        const params = new URLSearchParams();
+        params.set('labelIds', labelId);
+        params.set('maxResults', maxResults.toString());
+        return this.httpClient.get(this.API_URL + '/me/threads' + '?' + params, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.getAuthtoken()}`
             })
