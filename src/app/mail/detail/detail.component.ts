@@ -58,7 +58,7 @@ export class DetailComponent implements OnInit {
                         }
                     });
 
-                    console.log(this.responseHeaders);
+                    // console.log(this.responseHeaders);
                     // console.log(response);
                 },
                 (error) => console.log(error)

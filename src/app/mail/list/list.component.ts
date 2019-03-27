@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MailService} from '../../services/mail.service';
 import {UserService} from '../../services/user.service';
 import {error} from '@angular/compiler/src/util';
-import {forkJoin} from 'rxjs';
+import {forkJoin, pipe} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-list',
@@ -13,9 +14,7 @@ export class ListComponent implements OnInit {
     threadList;
     user;
     isLoading = true;
-    sender: string;
     private messages = [];
-    private threadListFull: any;
 
     constructor(private userService: UserService,
                 private mailService: MailService) {
@@ -43,7 +42,6 @@ export class ListComponent implements OnInit {
                 (threadlist) => {
                     this.threadList = threadlist;
                     this.isLoading = false;
-                    // console.log(this.threadList);
                 },
                 (error) => console.log(error)
             );
@@ -57,7 +55,7 @@ export class ListComponent implements OnInit {
             .subscribe(
                 response => {
                     const threadList = response;
-                    let threadObsArray = [];
+                    const threadObsArray = [];
 
                     for (let i = 0; i <= threadList.length; i++) {
                         if (threadList[i] && threadList[i].id) {
@@ -65,12 +63,34 @@ export class ListComponent implements OnInit {
                         }
                     }
                     forkJoin(...threadObsArray)
-                        .subscribe(results => {
-                            this.threadListFull = results;
-                            console.log(this.threadListFull);
+                        .subscribe((results) => {
+                            results.map((thread, index) => {
+                                // Get labelIds [string]
+                                const labelsId = thread.messages[0].labelIds;
+                                // ['Subject', 'From', 'To', 'Date']
+                                const headers = thread.messages[0].payload.headers;
+                                const subject = headers.filter( (v) => v.name === 'Subject');
+                                const fromexp = headers.filter( (v) => v.name === 'From');
+                                const to = headers.filter( (v) => v.name === 'To');
+                                const date = headers.filter( (v) => v.name === 'Date');
+                                const bodyResponse = this.parseMail(thread.messages[0].payload.parts[1].body.data);
+                                const item$ = {
+                                    labelsId,
+                                    subject : subject[0].value,
+                                    fromexp : fromexp[0].value,
+                                    to : to[0].value,
+                                    date : date[0].value,
+                                    bodyResponse
+                                };
+                                console.log(item$);
+                            });
                         });
                 },
                 error => console.log(error),
             );
+    }
+
+    private parseMail(content) {
+        return atob(content.replace(/-/g, '+').replace(/_/g, '/'));
     }
 }
