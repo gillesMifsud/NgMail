@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
-    MatCardModule,
+    MatCardModule, MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -19,6 +19,7 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
     imports: [
         MatMenuModule,
         MatToolbarModule,
+        MatExpansionModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,
@@ -34,6 +35,7 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
         ClickOutsideDirective,
         MatMenuModule,
         MatToolbarModule,
+        MatExpansionModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,

@@ -1,26 +1,21 @@
 <div class="row">
     <div class="col-12">
-        <mat-card *ngIf="isLoading">
+        <div *ngIf="isLoading">
             <mat-spinner></mat-spinner>
-        </mat-card>
-        <mat-card *ngIf="!isLoading">
-            <mat-card-header>
-                <mat-card-title>{{ user }}</mat-card-title>
-                <mat-card-subtitle>
-                    <button mat-raised-button color="primary" (click)="getThreadList()">Refresh Thread list</button>
-                    <button mat-raised-button color="primary" (click)="getAllThreadsWithDetail()">GET ALL</button>
-                </mat-card-subtitle>
-            </mat-card-header>
+        </div>
+        <div *ngIf="!isLoading">
+            <h2>{{user}}</h2>
+            <span>
+                <button mat-raised-button color="primary" (click)="getAllThreadsWithDetail()">Refresh</button>
+            </span>
 
-            <mat-card-content>
-                <mat-list>
-                    <app-list-item
-                            *ngFor="let threadElem of threadList; let i = index;"
-                            [thread]="threadElem"
-                            [index]="i">
-                    </app-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
+            <mat-list>
+                <app-list-item
+                        *ngFor="let threadElem of $threadList; let i = index;"
+                        [thread]="threadElem"
+                        [index]="i">
+                </app-list-item>
+            </mat-list>
+        </div>
     </div>
 </div>

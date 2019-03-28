@@ -11,7 +11,7 @@ import {filter, map} from 'rxjs/operators';
     styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-    threadList;
+    $threadList = [];
     user;
     isLoading = true;
     private messages = [];
@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getThreadList();
+        // this.getThreadList();
         this.getUserProfile();
         this.getAllThreadsWithDetail();
     }
@@ -36,16 +36,16 @@ export class ListComponent implements OnInit {
             );
     }
 
-    getThreadList() {
-        return this.mailService.getThreadsList()
-            .subscribe(
-                (threadlist) => {
-                    this.threadList = threadlist;
-                    this.isLoading = false;
-                },
-                (error) => console.log(error)
-            );
-    }
+    // getThreadList() {
+    //     return this.mailService.getThreadsList()
+    //         .subscribe(
+    //             (threadlist) => {
+    //                 this.$threadList = threadlist;
+    //                 this.isLoading = false;
+    //             },
+    //             (error) => console.log(error)
+    //         );
+    // }
 
     /**
      * Get latest threads with their messages
@@ -82,8 +82,13 @@ export class ListComponent implements OnInit {
                                     date : date[0].value,
                                     bodyResponse
                                 };
-                                console.log(item$);
+                                this.$threadList = this.$threadList.concat([
+                                    item$
+                                ]);
+                                this.isLoading = false;
+                                // console.log(item$);
                             });
+                            console.log(this.$threadList);
                         });
                 },
                 error => console.log(error),

@@ -21,13 +21,14 @@ import {gapiClientConfig} from '../environments/gapiClientConfig';
 import {DetailComponent} from './mail/detail/detail.component';
 import {ListComponent} from './mail/list/list.component';
 import {ListItemComponent} from './mail/list/list-item/list-item.component';
-import {SanitizeHtmlPipePipe} from './shared/sanitize-html-pipe.pipe';
+import {SanitizeHtmlPipePipe} from './pipes/sanitize-html-pipe.pipe';
 import {SendComponent} from './mail/send/send.component';
 import {AuthGuard} from './services/auth-guard.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TokenInterceptor} from './services/token.interceptor.service';
 import {RedirectInterceptorService} from './services/redirect.interceptor.service';
 import {SharedModule} from './shared/shared.module';
+import { RmBtwChevronsPipe } from './pipes/rm-btw-chevrons.pipe';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import {SharedModule} from './shared/shared.module';
         ListComponent,
         ListItemComponent,
         SanitizeHtmlPipePipe,
-        SendComponent
+        SendComponent,
+        RmBtwChevronsPipe
     ],
     imports: [
         BrowserModule,
