@@ -5,12 +5,16 @@ import {UserService} from './user.service';
 import {catchError, concatAll, flatMap, map, mergeAll, mergeMap} from 'rxjs/operators';
 import {throwError, Observable, concat, forkJoin, merge, from, of} from 'rxjs';
 import {NewMail} from '../models/newMail.model';
+import { Base64 } from 'js-base64';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class MailService {
     private readonly API_URL: string = 'https://www.googleapis.com/gmail/v1/users';
+    private readonly SEND_API_URL: string = 'https://www.googleapis.com/gmail/v1/users/me/messages/send';
+    private readonly SEND_ATTACHMENT_API_URL: string = 'https://www.googleapis.com/upload/gmail/v1/users/me/messages/send';
     private readonly BATCH_API_URL: string = 'https://www.googleapis.com/batch/gmail/v1/users';
 
     constructor(
@@ -112,10 +116,59 @@ export class MailService {
      * POST https://www.googleapis.com/gmail/v1/users/userId/messages/send
      */
     sendMessage(message: NewMail) {
-        return this.httpClient.post(this.API_URL + '/me/messages/send', message, {
+
+        const body = this.encodeBodySimple(
+            message.to,
+            message.subject,
+            message.message
+        );
+
+        return this.httpClient.post(this.SEND_ATTACHMENT_API_URL, body, {
             headers: new HttpHeaders({
-                Authorization: `Bearer ${this.getAuthtoken()}`
+                Authorization: `Bearer ${this.getAuthtoken()}`,
+                Accept: 'application/json',
+                'Content-Type': 'message/rfc822'
             })
         });
+    }
+
+    // Base64-encode the mail and make it URL-safe
+    encodeBody(to, subject, message) {
+        let msg = 'To: ' + to + '\n';
+        msg += 'From: ' + 'example@gmail.com' + '\n';
+        msg += 'Subject: =?utf-8?B?' + subject + '?=\n';
+        msg += 'Date: ' + new Date() + '\n';
+        msg += 'Content-Type: multipart/alternative; boundary=boundaryboundary\n\n';
+        msg += '--boundaryboundary\n';
+        msg += 'Content-Type: text/plain; charset=UTF-8\n';
+        msg += 'Content-Transfer-Encoding: base64\n\n';
+        msg += message + '\n\n';
+        msg += '--boundaryboundary';
+
+        const encodedMsg = Base64.encodeURI(msg);
+
+        return {
+            userId: 'me',
+            resource: {
+                raw: encodedMsg
+            }
+        };
+    }
+
+    encodeBodySimple(to, subject, message) {
+        const encodedMessage = btoa([
+            'From: ' + 'me' + '\r\n',
+            'To: ' + to + '\r\n',
+            'Subject: ' + subject + '\r\n\r\n',
+
+            message
+        ].join('')).replace(/\+/g, '-').replace(/\//g, '_');
+
+        return {
+            userId: 'me',
+            resource: {
+                raw: JSON.stringify(encodedMessage)
+            }
+        };
     }
 }

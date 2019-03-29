@@ -27,16 +27,16 @@ export class SendComponent implements OnInit {
     }
 
     private initForm() {
-        const to = '';
-        const subject = '';
-        const message = '';
+        const to = 'gilles.mifsud.netapsys@gmail.com';
+        const subject = 'Test mail subject';
+        const message = 'This is a message test from ng mail.';
 
         this.mailForm = new FormGroup({
-            'to': new FormControl(subject, [
+            'to': new FormControl(to, [
                 Validators.required,
                 Validators.email
             ]),
-            'subject': new FormControl(to, [
+            'subject': new FormControl(subject, [
                 Validators.required,
                 Validators.maxLength(100)
             ]),
@@ -55,12 +55,15 @@ export class SendComponent implements OnInit {
         );
         this.mailService.sendMessage(newMail)
             .subscribe(
-                (response: Response) => {
-                    console.log(response);
-                }
+                (response: Response) => console.log(response),
+                (error) => console.log(error),
             );
+        console.log(this.mailService.encodeBodySimple(
+            this.mailForm.value['to'],
+            this.mailForm.value['subject'],
+            this.mailForm.value['message']));
         // this.mailForm.reset();
-        console.log(newMail);
+        // console.log(newMail);
     }
 
     onCancel() {

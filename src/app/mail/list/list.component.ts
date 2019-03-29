@@ -69,17 +69,18 @@ export class ListComponent implements OnInit {
                                 const labelsId = thread.messages[0].labelIds;
                                 // ['Subject', 'From', 'To', 'Date']
                                 const headers = thread.messages[0].payload.headers;
-                                const subject = headers.filter( (v) => v.name === 'Subject');
-                                const fromexp = headers.filter( (v) => v.name === 'From');
-                                const to = headers.filter( (v) => v.name === 'To');
-                                const date = headers.filter( (v) => v.name === 'Date');
-                                const bodyResponse = this.parseMail(thread.messages[0].payload.parts[1].body.data);
+                                const subject = headers.filter((v) => v.name === 'Subject');
+                                const fromexp = headers.filter((v) => v.name === 'From');
+                                const to = headers.filter((v) => v.name === 'To');
+                                const date = headers.filter((v) => v.name === 'Date');
+                                const bodyResponse = thread.messages[0].payload.parts && thread.messages[0].payload.parts[1] && this.parseMail(thread.messages[0].payload.parts[1].body.data);
+                                console.log(thread);
                                 const item$ = {
                                     labelsId,
-                                    subject : subject[0].value,
-                                    fromexp : fromexp[0].value,
-                                    to : to[0].value,
-                                    date : date[0].value,
+                                    subject: subject[0].value,
+                                    fromexp: fromexp[0].value,
+                                    to: to[0].value,
+                                    date: date[0].value,
                                     bodyResponse
                                 };
                                 this.$threadList = this.$threadList.concat([
@@ -88,7 +89,7 @@ export class ListComponent implements OnInit {
                                 this.isLoading = false;
                                 // console.log(item$);
                             });
-                            console.log(this.$threadList);
+                            // console.log(this.$threadList);
                         });
                 },
                 error => console.log(error),
