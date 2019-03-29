@@ -67,6 +67,7 @@ export class ListComponent implements OnInit {
                             results.map((thread, index) => {
                                 // Get labelIds [string]
                                 const labelsId = thread.messages[0].labelIds;
+                                const threadId = thread.id;
                                 // ['Subject', 'From', 'To', 'Date']
                                 const headers = thread.messages[0].payload.headers;
                                 const subject = headers.filter((v) => v.name === 'Subject');
@@ -74,8 +75,8 @@ export class ListComponent implements OnInit {
                                 const to = headers.filter((v) => v.name === 'To');
                                 const date = headers.filter((v) => v.name === 'Date');
                                 const bodyResponse = thread.messages[0].payload.parts && thread.messages[0].payload.parts[1] && this.parseMail(thread.messages[0].payload.parts[1].body.data);
-                                console.log(thread);
                                 const item$ = {
+                                    id: threadId,
                                     labelsId,
                                     subject: subject[0].value,
                                     fromexp: fromexp[0].value,
@@ -87,7 +88,7 @@ export class ListComponent implements OnInit {
                                     item$
                                 ]);
                                 this.isLoading = false;
-                                // console.log(item$);
+                                console.log(item$);
                             });
                             // console.log(this.$threadList);
                         });

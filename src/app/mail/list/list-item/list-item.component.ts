@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {MailService} from '../../../services/mail.service';
 
 @Component({
     selector: 'app-list-item',
@@ -8,9 +9,10 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ListItemComponent implements OnInit {
     @Input() index: number;
     @Input() thread: any;
+    @Input() threadId: number;
     step = 0;
 
-    constructor() {
+    constructor(private mailService: MailService) {
     }
 
     ngOnInit() {
@@ -31,4 +33,11 @@ export class ListItemComponent implements OnInit {
         console.log('prevStep : ' + this.step);
     }
 
+    deleteThread(threadId: number) {
+        this.mailService.deleteThread(threadId)
+            .subscribe(
+                response => console.log(response),
+                error => console.log(error),
+            );
+    }
 }

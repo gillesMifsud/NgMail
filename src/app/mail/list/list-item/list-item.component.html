@@ -5,7 +5,7 @@
                 <mat-icon mat-list-icon>mail</mat-icon>
                 {{ thread.fromexp |  rmBtwChevrons }}  {{ thread.subject }}
             </mat-panel-title>
-            <mat-panel-description>{{ thread.date | date }}</mat-panel-description>
+            <mat-panel-description>{{ thread.date | date }} - <mat-icon mat-list-icon (click)="deleteThread(threadId)">delete</mat-icon></mat-panel-description>
         </mat-expansion-panel-header>
 
         <div>

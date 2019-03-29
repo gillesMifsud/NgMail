@@ -171,4 +171,12 @@ export class MailService {
             }
         };
     }
+
+    deleteThread(threadId: number) {
+        return this.httpClient.delete(this.API_URL + '/me/messages/' + threadId , {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.getAuthtoken()}`
+            })
+        });
+    }
 }

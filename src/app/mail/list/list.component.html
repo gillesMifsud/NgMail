@@ -13,6 +13,7 @@
                 <app-list-item
                         *ngFor="let threadElem of $threadList; let i = index;"
                         [thread]="threadElem"
+                        [threadId]="threadElem.id"
                         [index]="i">
                 </app-list-item>
             </mat-list>
