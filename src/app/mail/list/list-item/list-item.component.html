@@ -10,6 +10,8 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
 
+        <mat-divider></mat-divider>
+
         <div class="accordion-content">
             <div class="mail-header">
                 <div>
@@ -19,7 +21,6 @@
                         (click)="openDialog(threadId, thread.subject)">
                     <mat-icon mat-list-icon >delete</mat-icon>
                 </button>
-
             </div>
             <div class="mail-content">
                 <div [innerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>

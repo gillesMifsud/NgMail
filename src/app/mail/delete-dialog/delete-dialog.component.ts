@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
@@ -6,28 +6,27 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
     templateUrl: './delete-dialog.component.html',
     styleUrls: ['./delete-dialog.component.scss']
 })
-export class DeleteDialogComponent implements OnInit {
+export class DeleteDialogComponent {
 
     title: string;
     description: string;
     subject: string;
+    threadId: number;
 
-    constructor(private dialogRef: MatDialogRef<DeleteDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) {
+    constructor(
+        private dialogRef: MatDialogRef<DeleteDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
         this.title = data.title;
         this.description = data.description;
         this.subject = data.subject;
-    }
-
-    ngOnInit() {
+        this.threadId = data.threadId;
     }
 
     save() {
-        console.log('save');
+        this.dialogRef.close(this.threadId);
     }
 
     close() {
-        this.dialogRef.close();
-        console.log('close');
+        this.dialogRef.close(null);
     }
 }

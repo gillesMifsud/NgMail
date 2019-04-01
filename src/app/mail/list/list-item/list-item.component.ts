@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MailService} from '../../../services/mail.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {DeleteDialogComponent} from '../../delete-dialog/delete-dialog.component';
+import {error} from '@angular/compiler/src/util';
 
 @Component({
     selector: 'app-list-item',
@@ -37,14 +38,6 @@ export class ListItemComponent implements OnInit {
         console.log('prevStep : ' + this.step);
     }
 
-    deleteThread(threadId: number) {
-        this.mailService.deleteThread(threadId)
-            .subscribe(
-                response => console.log(response),
-                error => console.log(error),
-            );
-    }
-
     openDialog(threadId: number, subject: string) {
         const dialogConfig = new MatDialogConfig();
 
@@ -61,8 +54,23 @@ export class ListItemComponent implements OnInit {
 
         const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe(
-            data => console.log('Dialog output:', data)
-        );
+        dialogRef.afterClosed()
+            .subscribe(
+                data => {
+                    if (data === this.threadId) {
+                        this.deleteThread(this.threadId);
+                        console.log('Deleted!');
+                    }
+                },
+                error => console.log(error)
+            );
+    }
+
+    deleteThread(threadId: number) {
+        this.mailService.deleteThread(threadId)
+            .subscribe(
+                response => console.log(response),
+                error => console.log(error),
+            );
     }
 }
