@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
-    MatCardModule, MatExpansionModule,
+    MatCardModule, MatDialogModule, MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -11,15 +11,18 @@ import {
     MatProgressSpinnerModule, MatSidenavModule, MatToolbarModule
 } from '@angular/material';
 import {ClickOutsideDirective} from '../directives/click-outside.directive';
+import {DeleteDialogComponent} from '../mail/delete-dialog/delete-dialog.component';
 
 @NgModule({
     declarations: [
-        ClickOutsideDirective
+        ClickOutsideDirective,
+        DeleteDialogComponent
     ],
     imports: [
         MatMenuModule,
         MatToolbarModule,
         MatExpansionModule,
+        MatDialogModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,
@@ -36,6 +39,7 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
         MatMenuModule,
         MatToolbarModule,
         MatExpansionModule,
+        MatDialogModule,
         MatIconModule,
         MatButtonModule,
         MatIconModule,
@@ -45,6 +49,9 @@ import {ClickOutsideDirective} from '../directives/click-outside.directive';
         MatProgressSpinnerModule,
         MatInputModule,
         MatSidenavModule
+    ],
+    entryComponents: [
+        DeleteDialogComponent
     ]
 })
 export class SharedModule {

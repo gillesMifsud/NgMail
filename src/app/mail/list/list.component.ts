@@ -74,7 +74,8 @@ export class ListComponent implements OnInit {
                                 const fromexp = headers.filter((v) => v.name === 'From');
                                 const to = headers.filter((v) => v.name === 'To');
                                 const date = headers.filter((v) => v.name === 'Date');
-                                const bodyResponse = thread.messages[0].payload.parts && thread.messages[0].payload.parts[1] && this.parseMail(thread.messages[0].payload.parts[1].body.data);
+                                const bodyResponse = thread.messages[0].payload.parts && thread.messages[0].payload.parts[1] &&
+                                    this.parseMail(thread.messages[0].payload.parts[1].body.data);
                                 const item$ = {
                                     id: threadId,
                                     labelsId,
@@ -88,7 +89,7 @@ export class ListComponent implements OnInit {
                                     item$
                                 ]);
                                 this.isLoading = false;
-                                console.log(item$);
+                                // console.log(item$);
                             });
                             // console.log(this.$threadList);
                         });

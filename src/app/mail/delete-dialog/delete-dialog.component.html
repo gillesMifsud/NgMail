@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  {{ description }}
+  {{ subject }}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">No</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Yes</button>
+</mat-dialog-actions>

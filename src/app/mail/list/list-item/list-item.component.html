@@ -2,16 +2,29 @@
     <mat-expansion-panel [expanded]="step === index" (opened)="setStep(index)">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <mat-icon mat-list-icon>mail</mat-icon>
-                {{ thread.fromexp |  rmBtwChevrons }}  {{ thread.subject }}
+                <div class="first-line">
+                    <span class="exp">{{ thread.fromexp | rmBtwChevrons }}</span>
+                    <span class="date">{{ thread.date | date }}</span>
+                </div>
+                <div class="subject">{{ thread.subject }}</div>
             </mat-panel-title>
-            <mat-panel-description>{{ thread.date | date }} - <mat-icon mat-list-icon (click)="deleteThread(threadId)">delete</mat-icon></mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div>
-            Categories : <span *ngFor="let labelsId of thread.labelsId">{{ labelsId | lowercase }} </span>
+        <div class="accordion-content">
+            <div class="mail-header">
+                <div>
+                    Categories : <span *ngFor="let labelsId of thread.labelsId">{{ labelsId | lowercase }} </span>
+                </div>
+                <button mat-icon-button color="warn" aria-label="Delete mail"
+                        (click)="openDialog(threadId, thread.subject)">
+                    <mat-icon mat-list-icon >delete</mat-icon>
+                </button>
+
+            </div>
+            <div class="mail-content">
+                <div [innerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>
+            </div>
         </div>
-        <div [innerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>
 
         <mat-action-row>
             <button mat-button color="warn" (click)="prevStep()">Previous</button>

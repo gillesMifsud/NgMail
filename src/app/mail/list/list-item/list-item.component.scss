@@ -1,6 +1,28 @@
 mat-expansion-panel {
   margin-bottom: 3px;
 }
+
 mat-panel-description {
   justify-content: flex-end;
+}
+
+@media (max-width: 991px) {
+  .mat-expansion-panel-header-title {
+    flex-direction: column;
+  }
+}
+.exp {
+  font-weight: bold;
+  margin-right: 15px;
+}
+.date {
+  color: #adb5bd;
+  font-size: 12px;
+}
+.mail-header {
+  border-radius: 3px;
+  padding: 5px;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MailService} from '../../../services/mail.service';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {DeleteDialogComponent} from '../../delete-dialog/delete-dialog.component';
 
 @Component({
     selector: 'app-list-item',
@@ -12,7 +14,9 @@ export class ListItemComponent implements OnInit {
     @Input() threadId: number;
     step = 0;
 
-    constructor(private mailService: MailService) {
+    constructor(
+        private mailService: MailService,
+        private dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -39,5 +43,26 @@ export class ListItemComponent implements OnInit {
                 response => console.log(response),
                 error => console.log(error),
             );
+    }
+
+    openDialog(threadId: number, subject: string) {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+
+        dialogConfig.data = {
+            // Shorthand syntax : threadId: threadId
+            threadId,
+            subject,
+            title: 'Delete mail?',
+            description: '  Do you really want to delete : '
+        };
+
+        const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(
+            data => console.log('Dialog output:', data)
+        );
     }
 }
