@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MailService} from '../../../services/mail.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {DeleteDialogComponent} from '../../delete-dialog/delete-dialog.component';
-import {error} from '@angular/compiler/src/util';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-list-item',
@@ -16,6 +16,7 @@ export class ListItemComponent implements OnInit {
     step = 0;
 
     constructor(
+        private router: Router,
         private mailService: MailService,
         private dialog: MatDialog) {
     }
@@ -69,7 +70,9 @@ export class ListItemComponent implements OnInit {
     deleteThread(threadId: number) {
         this.mailService.deleteThread(threadId)
             .subscribe(
-                response => console.log(response),
+                response => {
+                    console.log(response);
+                },
                 error => console.log(error),
             );
     }

@@ -19,11 +19,11 @@
                 </div>
                 <button mat-icon-button color="warn" aria-label="Delete mail"
                         (click)="openDialog(threadId, thread.subject)">
-                    <mat-icon mat-list-icon >delete</mat-icon>
+                    <mat-icon mat-list-icon>delete</mat-icon>
                 </button>
             </div>
             <div class="mail-content">
-                <div [innerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>
+                <div [outerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>
             </div>
         </div>
 

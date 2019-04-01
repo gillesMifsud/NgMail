@@ -29,6 +29,7 @@ import {TokenInterceptor} from './services/token.interceptor.service';
 import {RedirectInterceptorService} from './services/redirect.interceptor.service';
 import {SharedModule} from './shared/shared.module';
 import { RmBtwChevronsPipe } from './pipes/rm-btw-chevrons.pipe';
+import { DecodeHtmlStringPipe } from './pipes/decode-html-string.pipe';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { RmBtwChevronsPipe } from './pipes/rm-btw-chevrons.pipe';
         ListItemComponent,
         SanitizeHtmlPipePipe,
         SendComponent,
-        RmBtwChevronsPipe
+        RmBtwChevronsPipe,
+        DecodeHtmlStringPipe
     ],
     imports: [
         BrowserModule,

@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MailService} from '../../services/mail.service';
 import {UserService} from '../../services/user.service';
-import {error} from '@angular/compiler/src/util';
-import {forkJoin, pipe} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-list',
@@ -21,19 +19,7 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.getThreadList();
-        this.getUserProfile();
         this.getAllThreadsWithDetail();
-    }
-
-    getUserProfile() {
-        this.mailService.getUserProfile()
-            .subscribe(
-                (user: any) => {
-                    this.user = user.emailAddress;
-                },
-                (error) => console.log(error)
-            );
     }
 
     // getThreadList() {
