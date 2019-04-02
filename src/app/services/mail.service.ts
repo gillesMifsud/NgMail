@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GoogleApiService} from 'ng-gapi';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {UserService} from './user.service';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {NewMail} from '../models/newMail.model';
@@ -19,22 +18,13 @@ export class MailService {
 
     constructor(
         private gapiService: GoogleApiService,
-        private userService: UserService,
         private httpClient: HttpClient) {
     }
-
-    private getAuthtoken() {
-        return this.userService.getToken();
-    }
-
     /**
      * GET https://www.googleapis.com/gmail/v1/users/userId/messages
      */
     getUsersMessagesList() {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
-        return this.httpClient.get(this.API_URL + '/me/messages', {
-            headers
-        })
+        return this.httpClient.get(this.API_URL + '/me/messages')
             .pipe(
                 map((response: any) => response.messages),
                 catchError((response: any) => throwError(response))
@@ -45,10 +35,7 @@ export class MailService {
      * GET https://www.googleapis.com/gmail/v1/users/userId/messages/id
      */
     getUsersMessagesDetail(id: number) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
-        return this.httpClient.get(this.API_URL + '/me/messages/' + id, {
-            headers
-        })
+        return this.httpClient.get(this.API_URL + '/me/messages/' + id)
             .pipe(
                 map(res => {
                     return res;
@@ -60,11 +47,7 @@ export class MailService {
      * GET https://www.googleapis.com/gmail/v1/users/userId/profile
      */
     getUserProfile(userId: string = 'me') {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
-
-        return this.httpClient.get(this.API_URL + '/' + userId + '/profile', {
-            headers
-        })
+        return this.httpClient.get(this.API_URL + '/' + userId + '/profile')
             .pipe(
                 map(res => {
                     return res;
@@ -77,10 +60,8 @@ export class MailService {
      */
     getThreadsList(maxResults: number = 10, labelId: string = 'INBOX') {
         const params = new HttpParams().set('labelIds', labelId).set('maxResults', maxResults.toString());
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
 
         return this.httpClient.get(this.API_URL + '/me/threads', {
-            headers,
             params
         })
             .pipe(
@@ -94,10 +75,8 @@ export class MailService {
      */
     getThreadDetail(id: number) {
         const params = new HttpParams().set('format', 'full');
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
 
         return this.httpClient.get(this.API_URL + '/me/threads/' + id, {
-            headers,
             params
         })
             .pipe(
@@ -111,7 +90,6 @@ export class MailService {
      */
     sendMessage(message: NewMail) {
         const headers = new HttpHeaders()
-            .set('Authorization', `Bearer ${this.getAuthtoken()}`)
             .set('Accept', 'application/json')
             .set('Content-Type', 'message/rfc822');
 
@@ -167,10 +145,6 @@ export class MailService {
     }
 
     deleteThread(threadId: number) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.getAuthtoken()}`);
-
-        return this.httpClient.delete(this.API_URL + '/me/messages/' + threadId, {
-            headers
-        });
+        return this.httpClient.delete(this.API_URL + '/me/messages/' + threadId);
     }
 }
