@@ -7,9 +7,6 @@
             </div>
             <div class="subject">{{ thread.subject }}</div>
         </mat-panel-title>
-
-        <span>STEP : {{step}} | ITEM INDEX : {{itemIndex}}</span>
-
     </mat-expansion-panel-header>
 
     <mat-divider></mat-divider>
@@ -19,15 +16,6 @@
             <div>
                 Categories : <span *ngFor="let labelsId of thread.labelsId">{{ labelsId | lowercase }} </span>
             </div>
-
-            <button (click)="prevStep()" mat-icon-button color="primary" aria-label="Previous mail">
-                <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-
-            <button (click)="nextStep()" mat-icon-button color="primary" aria-label="Next mail">
-                <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-
             <button mat-icon-button color="warn" aria-label="Delete mail"
                     (click)="openDialog(threadId, thread.subject)">
                 <mat-icon mat-list-icon>delete</mat-icon>
@@ -37,4 +25,16 @@
             <div [outerHTML]="thread.bodyResponse | sanitizeHtmlPipe"></div>
         </div>
     </div>
+
+    <mat-action-row>
+        <button (click)="prevStep()" mat-button color="primary" aria-label="Previous mail">
+            <mat-icon>navigate_before</mat-icon>
+            <b>Prev</b>
+        </button>
+
+        <button (click)="nextStep()" mat-button color="accent" aria-label="Next mail">
+            <b>Next</b>
+            <mat-icon>navigate_next</mat-icon>
+        </button>
+    </mat-action-row>
 </mat-expansion-panel>
