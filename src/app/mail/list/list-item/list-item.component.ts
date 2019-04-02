@@ -3,6 +3,7 @@ import {MailService} from '../../../services/mail.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {DeleteDialogComponent} from '../../delete-dialog/delete-dialog.component';
 import {Router} from '@angular/router';
+import {StepService} from '../../../services/step.service';
 
 @Component({
     selector: 'app-list-item',
@@ -13,30 +14,29 @@ export class ListItemComponent implements OnInit {
     @Input() itemIndex: number;
     @Input() thread: any;
     @Input() threadId: number;
-    step = 0;
+    step: number;
 
     constructor(
         private router: Router,
         private mailService: MailService,
+        private stepService: StepService,
         private dialog: MatDialog) {
     }
 
     ngOnInit() {
+        this.stepService.step.subscribe(step => this.step = step);
     }
 
-    setStep(index: number) {
-        this.step = index;
-        console.log('setStep : ' + this.step);
+    setStep(step: number) {
+        this.stepService.changeStep(step);
     }
 
     nextStep() {
-        this.step++;
-        console.log('nextStep : ' + this.step);
+        this.stepService.changeStep(this.step = this.step + 1);
     }
 
     prevStep() {
-        this.step--;
-        console.log('prevStep : ' + this.step);
+        this.stepService.changeStep(this.step = this.step - 1);
     }
 
     openDialog(threadId: number, subject: string) {

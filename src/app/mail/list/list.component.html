@@ -13,7 +13,8 @@
                         *ngFor="let threadElem of $threadList; let i = index;"
                         [thread]="threadElem"
                         [threadId]="threadElem.id"
-                        [itemIndex]="i">
+                        [itemIndex]="i"
+                        >
                 </app-list-item>
             </mat-accordion>
         </div>

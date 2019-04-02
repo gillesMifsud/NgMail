@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MailService} from '../../services/mail.service';
 import {UserService} from '../../services/user.service';
 import {forkJoin} from 'rxjs';
-import {HttpEvent} from '@angular/common/http';
+import {StepService} from '../../services/step.service';
 
 @Component({
     selector: 'app-list',
@@ -16,23 +16,13 @@ export class ListComponent implements OnInit {
     private messages = [];
 
     constructor(private userService: UserService,
+                private stepService: StepService,
                 private mailService: MailService) {
     }
 
     ngOnInit() {
         this.getAllThreadsWithDetail();
     }
-
-    // getThreadList() {
-    //     return this.mailService.getThreadsList()
-    //         .subscribe(
-    //             (threadlist) => {
-    //                 this.$threadList = threadlist;
-    //                 this.isLoading = false;
-    //             },
-    //             (error) => console.log(error)
-    //         );
-    // }
 
     /**
      * Get latest threads with their messages
