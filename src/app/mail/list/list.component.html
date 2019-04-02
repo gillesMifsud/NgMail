@@ -8,14 +8,14 @@
                 <button mat-raised-button color="primary" (click)="getAllThreadsWithDetail()">Refresh</button>
             </span>
 
-            <mat-list>
+            <mat-accordion multi>
                 <app-list-item
                         *ngFor="let threadElem of $threadList; let i = index;"
                         [thread]="threadElem"
                         [threadId]="threadElem.id"
-                        [index]="i">
+                        [itemIndex]="i">
                 </app-list-item>
-            </mat-list>
+            </mat-accordion>
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
     styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent implements OnInit {
-    @Input() index: number;
+    @Input() itemIndex: number;
     @Input() thread: any;
     @Input() threadId: number;
     step = 0;

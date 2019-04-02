@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MailService} from '../../services/mail.service';
 import {UserService} from '../../services/user.service';
 import {forkJoin} from 'rxjs';
+import {HttpEvent} from '@angular/common/http';
 
 @Component({
     selector: 'app-list',
@@ -39,7 +40,7 @@ export class ListComponent implements OnInit {
     getAllThreadsWithDetail() {
         return this.mailService.getThreadsList()
             .subscribe(
-                response => {
+                (response) => {
                     const threadList = response;
                     const threadObsArray = [];
 
