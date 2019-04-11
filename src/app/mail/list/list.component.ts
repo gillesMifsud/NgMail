@@ -51,8 +51,14 @@ export class ListComponent implements OnInit {
                                 const fromexp = headers.filter((v) => v.name === 'From');
                                 const to = headers.filter((v) => v.name === 'To');
                                 const date = headers.filter((v) => v.name === 'Date');
-                                const bodyResponse = thread.messages[0].payload.parts && thread.messages[0].payload.parts[1] &&
-                                    this.parseMail(thread.messages[0].payload.parts[1].body.data);
+
+                                const bodyParts = thread.messages[0].payload.parts;
+
+                                const bodyResponse = bodyParts !== undefined ?
+                                    bodyParts
+                                        .filter((part) => part.mimeType === 'text/html')
+                                        .map(part => this.parseMail(part.body.data)) : '';
+                                
                                 const item$ = {
                                     id: threadId,
                                     labelsId,
@@ -74,6 +80,11 @@ export class ListComponent implements OnInit {
                 error => console.log(error),
             );
     }
+
+    // var part = message.parts.filter(function(part) {
+    //     return part.mimeType == 'text/html';
+    // });
+    // var html = urlSafeBase64Decode(part.body.data);
 
     private parseMail(content) {
         return atob(content.replace(/-/g, '+').replace(/_/g, '/'));
